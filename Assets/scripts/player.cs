@@ -29,7 +29,7 @@ public class player : MonoBehaviour
         left = InputSystem.actions.FindAction("Left");
         right  = InputSystem.actions.FindAction("Right");
         space  = InputSystem.actions.FindAction("Test");
-        camOffset = new Vector3(0f, 10.4f, -2.5f);
+        camOffset = new Vector3(0f, 10.4f, -2.5f) * 2;
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class player : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
             Vector3 force = Quaternion.AngleAxis(angle, grav) * up;
-            rb.AddForce(force * 10 * rb.mass * speed, ForceMode.Impulse);
+            rb.AddForce(force * 10 * rb.mass * speed , ForceMode.Impulse);
 
         }
 
@@ -63,7 +63,7 @@ public class player : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
             Vector3 force = Quaternion.AngleAxis(-angle, grav) * up;
-            rb.AddForce(force * 10 * rb.mass * speed, ForceMode.Impulse);
+            rb.AddForce(force * 10 * rb.mass * speed , ForceMode.Impulse);
         }
 
         cam.transform.position = this.transform.position + camOffset;
