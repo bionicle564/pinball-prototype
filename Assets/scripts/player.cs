@@ -16,6 +16,9 @@ public class player : MonoBehaviour
 
     public Rigidbody rb;
 
+    public float cameraOffsetScale = 2;
+    public Vector3 cameraOffsetPosition = new Vector3(0f, 10.4f, -2.5f);
+
     public Vector3 up = new Vector3(0,0,1);
     public Vector3 grav = new Vector3(0,1,0);
     public float angle = 45f;
@@ -29,7 +32,7 @@ public class player : MonoBehaviour
         left = InputSystem.actions.FindAction("Left");
         right  = InputSystem.actions.FindAction("Right");
         space  = InputSystem.actions.FindAction("Test");
-        camOffset = new Vector3(0f, 10.4f, -2.5f) * 2;
+        camOffset = cameraOffsetPosition;
     }
 
     // Update is called once per frame
@@ -37,18 +40,7 @@ public class player : MonoBehaviour
     {
         if (space.WasPressedThisFrame())
         {
-            //rotate everything
-            /*
-             * up
-             * grav
-             * camOffset
-             */
 
-            rb.linearVelocity = new Vector3(0, 0, 0);
-            up = new Vector3(0,1,0);
-            grav = new Vector3(0, 0, -1);
-            camOffset = Quaternion.AngleAxis(90f, Vector3.Cross(up, grav)) * camOffset;
-            cam.transform.Rotate(Vector3.Cross(up, grav), 90f);
         }
 
         if (left.WasPressedThisFrame())
@@ -66,10 +58,10 @@ public class player : MonoBehaviour
             rb.AddForce(force * 10 * rb.mass * speed , ForceMode.Impulse);
         }
 
-        cam.transform.position = this.transform.position + camOffset;
+        cam.transform.position = this.transform.position + (camOffset * cameraOffsetScale);
 
         // make the ball fall
-        rb.AddForce(-up * rb.mass * 20);
+        rb.AddForce(-up * rb.mass * 40);
 
         //push the ball against the table
         rb.AddForce(-grav * rb.mass * 20);
@@ -82,5 +74,25 @@ public class player : MonoBehaviour
             print("stop");
         }
 
+    }
+
+    public void ChangeGrav(Vector3 ballUp, Vector3 camUp)
+    {
+        //find the fixed angle for camera
+        float camAngle = Vector3.Angle(new Vector3(0,1,0), cameraOffsetPosition);
+
+        up = ballUp;
+        grav = camUp;
+
+        Vector3 right = Vector3.Cross(grav, up);
+
+
+        // get new up length of offset
+        Vector3 tmp = Vector3.Normalize(grav) * cameraOffsetPosition.magnitude;
+
+        //rotate it fixed degrees
+        camOffset = Quaternion.AngleAxis(camAngle, Vector3.Cross(up, grav)) * tmp;
+        cam.transform.LookAt(transform,up);
+        cam.transform.LookAt(transform,up);
     }
 }
