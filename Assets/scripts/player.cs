@@ -59,6 +59,7 @@ public class player : MonoBehaviour
         }
 
         cam.transform.position = this.transform.position + (camOffset * cameraOffsetScale);
+        cam.transform.LookAt(this.transform);
 
         // make the ball fall
         rb.AddForce(-up * rb.mass * 40);
@@ -92,7 +93,11 @@ public class player : MonoBehaviour
 
         //rotate it fixed degrees
         camOffset = Quaternion.AngleAxis(camAngle, Vector3.Cross(up, grav)) * tmp;
-        cam.transform.LookAt(transform,up);
-        cam.transform.LookAt(transform,up);
+
+        //this doesn't work for some reason
+        //cam.transform.LookAt(this.transform.position);
+        
+        //Quaternion.AngleAxis(camAngle, Vector3.Cross(up, grav));
+
     }
 }
