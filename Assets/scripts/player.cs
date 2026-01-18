@@ -12,6 +12,12 @@ public class player : MonoBehaviour
 
     Vector3 camOffset;
 
+    Vector3 targetPos;
+    float camTransTime = 1f;
+    Vector3 targetUp;
+    Vector3 oldUp;
+
+
     public CinemachineCamera cam;
 
     public Rigidbody rb;
@@ -29,6 +35,8 @@ public class player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        oldUp = grav;
+        targetUp = grav;
         left = InputSystem.actions.FindAction("Left");
         right  = InputSystem.actions.FindAction("Right");
         space  = InputSystem.actions.FindAction("Test");
@@ -38,6 +46,9 @@ public class player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        camTransTime += Time.deltaTime * 1f;
+        camTransTime = Mathf.Clamp01(camTransTime);
+
         if (space.WasPressedThisFrame())
         {
 
@@ -48,7 +59,7 @@ public class player : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
             Vector3 force = Quaternion.AngleAxis(angle, grav) * up;
-            rb.AddForce(force * 10 * rb.mass * speed , ForceMode.Impulse);
+            rb.AddForce(force * 10 * rb.mass * speed, ForceMode.Impulse);
 
         }
 
@@ -57,12 +68,28 @@ public class player : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
             Vector3 force = Quaternion.AngleAxis(-angle, grav) * up;
-            rb.AddForce(force * 10 * rb.mass * speed , ForceMode.Impulse);
+            rb.AddForce(force * 10 * rb.mass * speed, ForceMode.Impulse);
         }
 
+
         //update the camera
-        cam.transform.position = this.transform.position + (camOffset * cameraOffsetScale);
-        cam.transform.LookAt(this.transform, up);
+        targetPos = this.transform.position + (camOffset * cameraOffsetScale);
+
+        cam.transform.position = Vector3.Lerp(cam.transform.position, targetPos, camTransTime);
+
+        Quaternion q1 = Quaternion.Euler(oldUp);
+        Quaternion q2 = Quaternion.Euler(targetUp);
+
+
+        cam.transform.LookAt(this.transform, Quaternion.Lerp(q1, q2 ,camTransTime).eulerAngles);
+
+        
+
+    }
+
+    void FixedUpdate()
+    {
+    
 
         // make the ball fall
         rb.AddForce(-up * rb.mass * 40);
@@ -77,12 +104,12 @@ public class player : MonoBehaviour
             rb.linearVelocity = new Vector3(0, 0, 0);
             print("stop");
         }
-
     }
 
     //changes the player's reletive gravety, and changes the camera to match
     public void ChangeGrav(Vector3 ballUp, Vector3 camUp, bool changeCam = true)
     {
+        oldUp = up;
         rb.linearVelocity = new Vector3(0, 0, 0);
         //find the fixed angle for camera
         float camAngle = Vector3.Angle(new Vector3(0,1,0), cameraOffsetPosition);
@@ -92,6 +119,7 @@ public class player : MonoBehaviour
 
         if (changeCam)
         {
+            targetUp = up;
             Vector3 right = Vector3.Cross(grav, up);
 
             // get new up length of offset
@@ -99,6 +127,9 @@ public class player : MonoBehaviour
 
             //rotate it fixed degrees
             camOffset = Quaternion.AngleAxis(camAngle, Vector3.Cross(up, grav)) * tmp;
+
+            camTransTime = 0f;
+            //targetPos = (camOffset * cameraOffsetScale);
         }
     }
 }
