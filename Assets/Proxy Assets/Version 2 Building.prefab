@@ -50,7 +50,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 6.206453, y: 9.5996895, z: 5.782113}
   m_Center: {x: 0.008855581, y: 1.6765366, z: -0.085504055}
@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e53eccb0fc26e3c48b64979bcc3dcca7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 31b0360168cb337438adc1601185b8e6, type: 2}
     - target: {fileID: 919132149155446097, guid: e53eccb0fc26e3c48b64979bcc3dcca7, type: 3}
       propertyPath: m_Name
       value: Building ver2
