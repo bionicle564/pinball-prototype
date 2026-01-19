@@ -92,10 +92,10 @@ public class player : MonoBehaviour
     
 
         // make the ball fall
-        rb.AddForce(-up * rb.mass * 40);
+        rb.AddForce(-up * rb.mass * 60);
 
         //push the ball against the table
-        rb.AddForce(-grav * rb.mass * 20);
+        rb.AddForce(-grav * rb.mass * 40);
 
         //an attempt to give the player a threshold of minimum speed
         Vector3 totalForce = rb.linearVelocity;
