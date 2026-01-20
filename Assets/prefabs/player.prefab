@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 5935432665693867787}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6078721, y: -0, z: -0, w: 0.794035}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.46, z: -0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -218,7 +218,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -302,9 +302,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8048791727411884030}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 193.76
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -316,11 +316,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &3492578784361629501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,5 +369,5 @@ MonoBehaviour:
   cameraOffsetPosition: {x: 0, y: 10.4, z: -2.5}
   up: {x: 0, y: 0, z: 1}
   grav: {x: 0, y: 1, z: 0}
-  angle: 45
-  speed: 1
+  angle: 30
+  speed: 7.48
